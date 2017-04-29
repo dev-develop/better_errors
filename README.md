@@ -29,7 +29,7 @@ Add this to your Gemfile:
 
 ```ruby
 group :development do
-  gem "better_errors", :github => 'dev-develop/better-errors', :branch => 'master'
+  gem "better_errors", :github => 'dev-develop/better_errors', :branch => 'master'
 end
 ```
 
