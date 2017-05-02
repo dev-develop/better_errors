@@ -10,6 +10,10 @@ Better Errors replaces the standard Rails error page with a much better and more
 ### and other traces follows like this:
 ![image](http://i.imgur.com/y4prOXy.png)
 
+### and shell is here (updated):
+![image](http://i.imgur.com/nOKfYoL.png)
+
+
 ## Features
 
 * Full stack trace
@@ -21,7 +25,8 @@ Better Errors replaces the standard Rails error page with a much better and more
 * Added Symfony a-like exception page.
 * Added ability to load all traces at once without second or more XHR request for each exception. (This adds some overload but its in development.)
 * Improved UI regarding to first. :)
-* Removed console -for now-
+<del>* Removed console -for now-</del>
+* Added shell feature back
 
 ## Installation
 
