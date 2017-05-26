@@ -20,7 +20,6 @@ module BetterErrors
       @env = env
       @start_time = Time.now.to_f
       @repls = []
-	  @frames = []
     end
 
     def id
@@ -57,6 +56,14 @@ module BetterErrors
 
     def backtrace_frames
       exception.backtrace
+    end
+
+    def exception_type
+      exception.type
+    end
+
+    def exception_message
+      exception.message.lstrip
     end
 
     def application_frames
@@ -101,17 +108,11 @@ module BetterErrors
     end
 
     def inspect_value(obj)
-		hash = {}
-		obj.instance_variables.each {|var| hash[var.to_s.delete("@")] = obj.instance_variable_get(var) }
-		if hash.blank?
-			return obj.inspect
-		else
-			return JSON.pretty_generate(hash).gsub("\n", "<br>").gsub(" ", "&nbsp;").gsub('":&nbsp;true', '":&nbsp;<b><span style="color: #f15c21;">true</span></b>').gsub('":&nbsp;false', '":&nbsp;<b><span style="color: #f15c21;">false</span></b>').gsub('":&nbsp;null', '":&nbsp;<b><span style="color: #f15c21;">null</span></b>')
-		end
-		rescue NoMethodError
-		  "<span class='unsupported'>(object doesn't support inspect)</span>"
-		rescue Exception
-		  "<span class='unsupported'>(exception was raised in inspect)</span>"
+      CGI.escapeHTML(obj.inspect)
+    rescue NoMethodError
+      "<span class='unsupported'>(object doesn't support inspect)</span>"
+    rescue Exception
+      "<span class='unsupported'>(exception was raised in inspect)</span>"
     end
   end
 end
