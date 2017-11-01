@@ -171,7 +171,7 @@
       .container { max-width: 1024px; margin: 0 auto; padding: 0 15px; }
       .container::after { content: ""; display: table; clear: both; }
       
-      header { background-color: #222; color: rgba(255, 255, 255, 0.75); font-size: 13px; height: 33px; line-height: 33px; padding: 0; }
+      header { background-color: #46385a; color: rgba(255, 255, 255, 0.75); font-size: 13px; height: 33px; line-height: 33px; padding: 0; }
       header .container { display: flex; justify-content: space-between; }
       .logo { flex: 1; font-size: 13px; font-weight: normal; margin: 0; padding: 0; }
       .logo svg { height: 18px; width: 18px; opacity: .8; vertical-align: -5px; }
@@ -182,7 +182,7 @@
       .help-link a:hover { color: #EEE; text-decoration: none; }
       .help-link a:hover svg { opacity: .9; }
       
-      .exception-summary { background: #B0413E; border-bottom: 2px solid rgba(0, 0, 0, 0.1); border-top: 1px solid rgba(0, 0, 0, .3); flex: 0 0 auto; margin-bottom: 15px; }
+      .exception-summary { background: #795da3; border-bottom: 2px solid rgba(0, 0, 0, 0.1); flex: 0 0 auto; margin-bottom: 15px; }
       .exception-metadata { background: rgba(0, 0, 0, 0.1); padding: 7px 0; }
       .exception-metadata .container { display: flex; flex-direction: row; justify-content: space-between; }
       .exception-metadata h2 { color: rgba(255, 255, 255, 0.8); font-size: 13px; font-weight: 400; margin: 0; }
@@ -191,9 +191,27 @@
       .exception-hierarchy .icon { margin: 0 3px; opacity: .7; }
       .exception-hierarchy .icon svg { height: 13px; width: 13px; vertical-align: -2px; }
       
-      .exception-message-wrapper { display: flex; align-items: flex-start; min-height: 70px; padding: 10px 0 8px; }
+      .exception-message-wrapper {
+            /* display: table; */
+            /* align-items: center; */
+            min-height: 70px;
+            /* height: 70px; */
+            vertical-align: middle;
+            padding: 10px 0 8px;
+            height: 90%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+      }
       .exception-message { flex-grow: 1; }
-      .exception-message, .exception-message a { color: #FFF; font-size: 21px; font-weight: 400; margin: 0; }
+      .exception-message, .exception-message a { 
+        color: #FFF;
+        font-size: 27px !important;
+        font-weight: 400;
+        font-family: Consolas, Hack, "Fira Code", FiraCode, Monaco, monospace, "Courier New", sans-serif;
+        margin: 0;
+      }
       .exception-message.long { font-size: 32px; }
       .exception-message a { text-decoration: none; }
       .exception-message a:hover { text-decoration: underline; }
@@ -620,10 +638,17 @@
           }*/
       
           .sub h3 {
-              color: #b0413e;
-              font-size: 2.1em;
+              color: #b366a4;
+              padding: 8px;
+              border: none;
+              font-size: 1.5em;
+              display: inline-block;
+              width: auto;
+              border-radius: 4px;
               margin: 10px 0;
-      		padding-left: 10px;
+              background-color: #f1f2ff;
+              margin-left: 14px;
+              /* padding-left: 10px; */
               /*text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
       
               -webkit-font-smoothing: antialiased;*/
@@ -652,11 +677,10 @@
           }
       
       	.sub table td.name span {
-      
-      		background-color: #2196f3;
-      		padding: 5px;
-      		border-radius: 4px;
-      		color: #fff;
+       		padding: 5px;
+          color: #795da3;
+          font-family: monospace;
+          font-size: 13px;
       	}
       
           .sub table td pre {
