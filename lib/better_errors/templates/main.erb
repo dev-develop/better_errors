@@ -1169,9 +1169,9 @@
       		if(!show) return;
               if(previousFrameInfo) previousFrameInfo.style.display = "none";
               /*previousFrameInfo = el;*/
-          		for(var i = 0; i < allFrames.length; i++) {
+          		for(var i = 0; i < allFrameInfos.length; i++) {
           			(function(i, e) {
-          				var e = allFrames[i];
+          				var e = allFrameInfos[i];
           				e.style.display = "none";
           			})(i);
           		}
