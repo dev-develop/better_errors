@@ -104,12 +104,30 @@ module BetterErrors
     end
 
     def inspect_value(obj)
-      inspect_raw_value(obj)
-    rescue NoMethodError
-      "<span class='unsupported'>(object doesn't support inspect)</span>"
-    rescue Exception => e
-      "<span class='unsupported'>(exception #{CGI.escapeHTML(e.class.to_s)} was raised in inspect)</span>"
-    end
+	
+		hashed = {}
+		begin
+			obj.instance_variables.each {|var|
+				hashed[var.to_s.delete("@")] = obj.instance_variable_get(var)
+			}
+			if hashed.blank?
+				begin
+					hashed = obj.to_hash
+				rescue
+					return obj.inspect
+				end
+			end
+				
+			return JSON.pretty_generate(hashed).gsub("\n", "<br>").gsub(" ", "&nbsp;").gsub('":&nbsp;true', '":&nbsp;<b><span style="color: #f15c21;">true</span></b>').gsub('":&nbsp;false', '":&nbsp;<b><span style="color: #f15c21;">false</span></b>').gsub('":&nbsp;null', '":&nbsp;<b><span style="color: #f15c21;">null</span></b>')
+			
+
+		rescue NoMethodError
+		  "<span class='unsupported'>(object doesn't support inspect)</span>"
+		rescue Exception
+		  "<span class='unsupported'>(exception was raised in inspect)</span>"
+ 
+		end
+	end
 
     def inspect_raw_value(obj)
       value = CGI.escapeHTML(obj.inspect)

@@ -1,765 +1,733 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="robots" content="noindex,nofollow" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title><%= exception.type %> at <%= request_path %></title>
-    <style>
-      /*
-      html5doctor.com Reset Stylesheet
-      v1.6.1
-      Last Updated: 2010-09-17
-      Author: Richard Clark - http://richclarkdesign.com
-      Twitter: @rich_clark
-      */
-      
-      html, body, div, span, object, iframe,
-      h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-      abbr, address, cite, code,
-      del, dfn, em, img, ins, kbd, q, samp,
-      small, strong, sub, sup, var,
-      b, i,
-      dl, dt, dd, ol, ul, li,
-      fieldset, form, label, legend,
-      table, caption, tbody, tfoot, thead, tr, th, td,
-      article, aside, canvas, details, figcaption, figure,
-      footer, header, hgroup, menu, nav, section, summary,
-      time, mark, audio, video {
-          margin:0;
-          padding:0;
-          border:0;
-          outline:0;
-          font-size:100%;
-          vertical-align:baseline;
-          background:transparent;
-      }
-      
-      body {
-          line-height:1;
-      }
-      
-      article,aside,details,figcaption,figure,
-      footer,header,hgroup,menu,nav,section {
-          display:block;
-      }
-      
-      nav ul {
-          list-style:none;
-      }
-      
-      blockquote, q {
-          quotes:none;
-      }
-      
-      blockquote:before, blockquote:after,
-      q:before, q:after {
-          content:'';
-          content:none;
-      }
-      
-      a {
-          margin:0;
-          padding:0;
-          font-size:100%;
-          vertical-align:baseline;
-          background:transparent;
-      }
-      
-      /* change colours to suit your needs */
-      ins {
-          background-color:#ff9;
-          color:#000;
-          text-decoration:none;
-      }
-      
-      /* change colours to suit your needs */
-      mark {
-          background-color:#ff9;
-          color:#000;
-          font-style:italic;
-          font-weight:bold;
-      }
-      
-      del {
-          text-decoration: line-through;
-      }
-      
-      abbr[title], dfn[title] {
-          border-bottom:1px dotted;
-          cursor:help;
-      }
-      
-      table {
-          border-collapse:collapse;
-          border-spacing:0;
-      }
-      
-      /* change border colour to suit your needs */
-      hr {
-          display:block;
-          height:1px;
-          border:0;
-          border-top:1px solid #cccccc;
-          margin:1em 0;
-          padding:0;
-      }
-      
-      input, select {
-          vertical-align:middle;
-      }
-      			html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{margin:.67em 0;font-size:2em}mark{color:#000;background:#ff0}small{font-size:80%}sub,sup{position:relative;font-size:75%;line-height:0;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{height:0;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{margin:0;font:inherit;color:inherit}button{overflow:visible}button,select{text-transform:none}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{padding:0;border:0}input{line-height:normal}input[type="checkbox"],input[type="radio"]{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;padding:0}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height:auto}input[type="search"]{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;-webkit-appearance:textfield}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}fieldset{padding:.35em .625em .75em;margin:0 2px;border:1px solid silver}legend{padding:0;border:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-spacing:0;border-collapse:collapse}td,th{padding:0}
-      
-      
-      
-      html {
-          /* always display the vertical scrollbar to avoid jumps when toggling contents */
-          overflow-y: scroll;
-      }
-      body { background-color: #F9F9F9; color: #222; font: 14px/1 Helvetica, Arial, sans-serif; padding-bottom: 45px; }
-      
-      a { cursor: pointer; text-decoration: none; }
-      a:hover { text-decoration: underline; }
-      abbr[title] { border-bottom: none; cursor: help; text-decoration: none; }
-      
-      code, pre { font: 13px/1.5 Consolas, Monaco, Menlo, "Ubuntu Mono", "Liberation Mono", monospace; }
-      
-      table, tr, th, td { background: #FFF; border-collapse: collapse; vertical-align: top; }
-      table { background: #FFF; border: 0; /*box-shadow: 0px 0px 1px rgba(128, 128, 128, .2);*/ margin: 1em 0; width: 100%; }
-      table th, table td { /*border: solid #E0E0E0; border-width: 1px 0;*/ padding: 8px 10px; }
-      table th { background-color: #E0E0E0; font-weight: bold; text-align: left; }
-      
-      .hidden-xs-down { display: none; }
-      .block { display: block; }
-      .hidden { display: none; }
-      .nowrap { white-space: nowrap; }
-      .newline { display: block; }
-      .break-long-words { -ms-word-break: break-all; word-break: break-all; word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; }
-      .text-small { font-size: 12px !important; }
-      .text-muted { color: #999; }
-      .text-bold { font-weight: bold; }
-      .empty { border: 4px dashed #E0E0E0; color: #999; margin: 1em 0; padding: .5em 2em; }
-      
-      .status-success { background: rgba(94, 151, 110, 0.3); }
-      .status-warning { background: rgba(240, 181, 24, 0.3); }
-      .status-error { background: rgba(176, 65, 62, 0.2); }
-      .status-success td, .status-warning td, .status-error td { background: transparent; }
-      tr.status-error td, tr.status-warning td { border-bottom: 1px solid #FAFAFA; border-top: 1px solid #FAFAFA; }
-      .status-warning .colored { color: #A46A1F; }
-      .status-error .colored  { color: #B0413E; }
-      
-      .sf-toggle { cursor: pointer; }
-      .sf-toggle-content { -moz-transition: display .25s ease; -webkit-transition: display .25s ease; transition: display .25s ease; }
-      .sf-toggle-content.sf-toggle-hidden { display: none; }
-      .sf-toggle-content.sf-toggle-visible { display: block; }
-      thead.sf-toggle-content.sf-toggle-visible, tbody.sf-toggle-content.sf-toggle-visible { display: table-row-group; }
-      .sf-toggle-off .icon-close, .sf-toggle-on .icon-open { display: none; }
-      .sf-toggle-off .icon-open, .sf-toggle-on .icon-close { display: block; }
-      
-      .tab-navigation { margin: 0 0 1em 0; padding: 0; }
-      .tab-navigation li { background: #FFF; border: 1px solid #DDD; color: #444; cursor: pointer; display: inline-block; font-size: 16px; margin: 0 0 0 -1px; padding: .5em .75em; z-index: 1; }
-      .tab-navigation li:hover { background: #EEE; }
-      .tab-navigation li.disabled { background: #F5F5F5; color: #999; }
-      .tab-navigation li.active { background: #666; border-color: #666; color: #FAFAFA; z-index: 1100; }
-      .tab-navigation li .badge { background-color: #F5F5F5; color: #777; display: inline-block; font-size: 14px; font-weight: bold; margin-left: 8px; min-width: 10px; padding: 1px 6px; text-align: center; }
-      .tab-navigation li:hover .badge { background: #FAFAFA; color: #777; }
-      .tab-navigation li.active .badge { background-color: #444; color: #FFF; }
-      .tab-navigation li .badge.status-warning { background: #A46A1F; color: #FFF; }
-      .tab-navigation li .badge.status-error { background: #B0413E; color: #FFF; }
-      .tab-content > *:first-child { margin-top: 0; }
-      
-      .container { max-width: 1024px; margin: 0 auto; padding: 0 15px; }
-      .container::after { content: ""; display: table; clear: both; }
-      
-      header { background-color: #46385a; color: rgba(255, 255, 255, 0.75); font-size: 13px; height: 33px; line-height: 33px; padding: 0; }
-      header .container { display: flex; justify-content: space-between; }
-      .logo { flex: 1; font-size: 13px; font-weight: normal; margin: 0; padding: 0; }
-      .logo svg { height: 18px; width: 18px; opacity: .8; vertical-align: -5px; }
-      
-      .help-link { margin-left: 15px; }
-      .help-link a { color: inherit; }
-      .help-link .icon svg { height: 15px; width: 15px; opacity: .7; vertical-align: -2px; }
-      .help-link a:hover { color: #EEE; text-decoration: none; }
-      .help-link a:hover svg { opacity: .9; }
-      
-      .exception-summary { background: #795da3; border-bottom: 2px solid rgba(0, 0, 0, 0.1); flex: 0 0 auto; margin-bottom: 15px; }
-      .exception-metadata { background: rgba(0, 0, 0, 0.1); padding: 7px 0; }
-      .exception-metadata .container { display: flex; flex-direction: row; justify-content: space-between; }
-      .exception-metadata h2 { color: rgba(255, 255, 255, 0.8); font-size: 13px; font-weight: 400; margin: 0; }
-      .repl { margin: 2px; }
-      .exception-http small { font-size: 13px; opacity: .7; }
-      .exception-hierarchy { flex: 1; }
-      .exception-hierarchy .icon { margin: 0 3px; opacity: .7; }
-      .exception-hierarchy .icon svg { height: 13px; width: 13px; vertical-align: -2px; }
-      
-      .exception-message-wrapper {
-            /* display: table; */
-            /* align-items: center; */
-            min-height: 70px;
-            /* height: 70px; */
-            vertical-align: middle;
-            padding: 10px 0 8px;
-            height: 90%;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-      }
-      .exception-message { flex-grow: 1; }
-      .exception-message, .exception-message a { 
-        color: #FFF;
-        font-size: 27px !important;
-        font-weight: 400;
-        font-family: Consolas, Hack, "Fira Code", FiraCode, Monaco, monospace, "Courier New", sans-serif;
-        margin: 0;
-      }
-      .exception-message.long { font-size: 32px; }
-      .exception-message a { text-decoration: none; }
-      .exception-message a:hover { text-decoration: underline; }
-      
-      .exception-illustration { flex-basis: 111px; flex-shrink: 0; height: 66px; margin-left: 15px; opacity: .7; }
-      
-      .trace + .trace { margin-top: 30px; }
-      .trace-head { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
-      .trace-head .trace-class { color: #222; font-size: 18px; font-weight: bold; line-height: 1.3; margin: 0; position: relative; }
-      .trace-head .trace-namespace { color: #999; display: block; font-size: 13px; }
-      .trace-head .icon { position: absolute; right: 0; top: 0; }
-      .trace-head .icon svg { height: 24px; width: 24px; }
-      
-      .trace-message { font-size: 14px; font-weight: normal; margin: .5em 0 0; }
-      
-      .trace-line { position: relative; padding-left: 36px; }
-      .trace-line.sf-toggle:hover { background: #F5F5F5; }
-      .trace-line a { color: #222; }
-      .trace-line .icon { opacity: .4; position: absolute; left: 10px; top: 11px; }
-      .trace-line .icon svg { height: 16px; width: 16px; }
-      
-      .trace-file-path, .trace-file-path a { margin-top: 3px; color: #999; color: #795da3; color: #B0413E; color: #222; font-size: 13px; }
-      .trace-class { color: #B0413E; }
-      .trace-type { padding: 0 2px; }
-      .trace-method { color: #B0413E; color: #222; font-weight: bold; color: #B0413E; }
-      .trace-arguments { color: #222; color: #999; font-weight: normal; color: #795da3; color: #777; padding-left: 2px; }
-      
-      .trace-code { background: #FFF; font-size: 12px; cursor: default; /* margin: 10px 0 2px; padding: 10px;*/ }
-      .trace-code ol { margin: 0; }
-      .trace-code li { color: #969896; margin: 0; padding-left: 10px; }
-      .trace-code li + li { margin-top: 10px; }
-      .trace-code li.selected { background: #F8EEC7; padding: 3px 0 3px 10px; }
-      .trace-code li code { color: #222; }
-      
-      .trace-as-text .stacktrace { line-height: 1.8; margin: 0 0 15px; white-space: pre-wrap; }
-      
-      @media (min-width: 575px) {
-          .hidden-xs-down { display: initial; }
-          .help-link { margin-left: 30px; }
-      }
-    </style>
-    <style>
-      .sf-reset .traces {
-                  padding-bottom: 14px;
-              }
-              .sf-reset .traces li {
-                  font-size: 12px;
-                  color: #868686;
-                  padding: 5px 4px;
-                  list-style-type: decimal;
-                  margin-left: 20px;
-              }
-              .sf-reset #logs .traces li.error {
-                  font-style: normal;
-                  color: #AA3333;
-                  background: #f9ecec;
-              }
-              .sf-reset #logs .traces li.warning {
-                  font-style: normal;
-                  background: #ffcc00;
-              }
-              /* fix for Opera not liking empty <li> */
-              .sf-reset .traces li:after {
-                  content: "\00A0";
-              }
-              .sf-reset .trace {
-                  border: 1px solid #D3D3D3;
-                  padding: 10px;
-                  overflow: auto;
-                  margin: 10px 0 20px;
-              }
-              .sf-reset .block-exception {
-                  -moz-border-radius: 16px;
-                  -webkit-border-radius: 16px;
-                  border-radius: 16px;
-                  margin-bottom: 20px;
-                  background-color: #f6f6f6;
-                  border: 1px solid #dfdfdf;
-                  padding: 30px 28px;
-                  word-wrap: break-word;
-                  overflow: hidden;
-              }
-              .sf-reset .block-exception div {
-                  color: #313131;
-                  font-size: 10px;
-              }
-              .sf-reset .block-exception-detected .illustration-exception,
-              .sf-reset .block-exception-detected .text-exception {
-                  float: left;
-              }
-              .sf-reset .block-exception-detected .illustration-exception {
-                  width: 152px;
-              }
-              .sf-reset .block-exception-detected .text-exception {
-                  width: 670px;
-                  padding: 30px 44px 24px 46px;
-                  position: relative;
-              }
-              .sf-reset .text-exception .open-quote,
-              .sf-reset .text-exception .close-quote {
-                  font-family: Arial, Helvetica, sans-serif;
-                  position: absolute;
-                  color: #C9C9C9;
-                  font-size: 8em;
-              }
-              .sf-reset .open-quote {
-                  top: 0;
-                  left: 0;
-              }
-              .sf-reset .close-quote {
-                  bottom: -0.5em;
-                  right: 50px;
-              }
-              .sf-reset .block-exception p {
-                  font-family: Arial, Helvetica, sans-serif;
-              }
-              .sf-reset .block-exception p a,
-              .sf-reset .block-exception p a:hover {
-                  color: #565656;
-              }
-              .sf-reset .logs h2 {
-                  float: left;
-                  width: 654px;
-              }
-              .sf-reset .error-count, .sf-reset .support {
-                  float: right;
-                  width: 170px;
-                  text-align: right;
-              }
-              .sf-reset .error-count span {
-                   display: inline-block;
-                   background-color: #aacd4e;
-                   -moz-border-radius: 6px;
-                   -webkit-border-radius: 6px;
-                   border-radius: 6px;
-                   padding: 4px;
-                   color: white;
-                   margin-right: 2px;
-                   font-size: 11px;
-                   font-weight: bold;
-              }
-              .sf-reset .support a {
-                  display: inline-block;
-                  -moz-border-radius: 6px;
-                  -webkit-border-radius: 6px;
-                  border-radius: 6px;
-                  padding: 4px;
-                  color: #000000;
-                  margin-right: 2px;
-                  font-size: 11px;
-                  font-weight: bold;
-              }
-              .sf-reset .toggle {
-                  vertical-align: middle;
-              }
-              .sf-reset .linked ul,
-              .sf-reset .linked li {
-                  display: inline;
-              }
-              .sf-reset #output-content {
-                  color: #000;
-                  font-size: 12px;
-              }
-              .sf-reset #traces-text pre {
-                  white-space: pre;
-                  font-size: 12px;
-                  font-family: monospace;
-              }
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      	pre, code, .repl input, .repl .prompt span, textarea, .code_linenums {
-              font-family: Hack, FiraCode, consolas, menlo, lucida console, monospace;
-              /*font-size: 14px;*/
-      		line-height: 14px;
-          }
-      
-      
-      
-      		   /* ---------------------------------------------------------------------
-           * Display area
-           * --------------------------------------------------------------------- */
-      
-          .trace_info {
-              background: transparent;
-              /*padding: 6px;*/
-      		padding: 10px;
-              /*border-radius: 3px;*/
-      		position: relative;
-      		/*min-height: 250px;*/
-      		height: auto;
-              margin-bottom: 2px;
-      		color: #000;
-          }
-      
-          .code_block{
-              background: #fff;
-      		position: relative;
-      		display: block;
-              /*border-left: 1px solid #ccc;*/
-          }
-      
-          /* Titlebar */
-          .trace_info .title {
-              /*background: #f1f1f1;
-      
-              box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);*/
-              overflow: hidden;
-              /*padding: 6px 10px;*/
-      
-             /* border: solid 1px #ccc;*/
-              border-bottom: 0;
-      
-             /* border-top-left-radius: 2px;
-              border-top-right-radius: 2px;*/
-          }
-      
-          .trace_info .title .name,
-          .trace_info .title .location {
-              font-size: 9pt;
-              line-height: 26px;
-              height: 26px;
-              overflow: hidden;
-      		border-left: 3px solid #ccc;
-      		padding: 8px;
-          }
-      
-          .trace_info .title .location {
-              float: left;
-              font-weight: bold;
-              font-size: 10pt;
-          }
-      
-          .trace_info .title .location a {
-              color:inherit;
-              text-decoration:none;
-              /*border-bottom:1px solid #aaaaaa;*/
-          }
-      
-          .trace_info .title .location a:hover {
-             /* border-color:#666666;*/
-          }
-      
-          .trace_info .title .name {
-              float: right;
-              font-weight: 200;
-          }
-      
-          .code, .console, .unavailable {
-              background: #fff;
-             /* padding: 5px;*/
-      
-            /*  box-shadow: inset 3px 3px 3px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.1);*/
-          }
-      
-          .code_linenums{
-              background:#fff;
-              padding-top:10px;
-              /*padding-bottom:9px;*/
-      		border-right: 2px solid #F1F1F1;
-              float:left;
-          }
-      
-          .code_linenums span{
-              display:block;
-              padding:4px 12px;
-      
-          }
-      
-      	.frame {
-      		cursor: pointer;
-      		border-bottom: 1px solid #f1f1f1;
-
-      	}
-      
-      	.frame:hover {
-      
-      		background-color: #f1f1f1;
-      
-      	}
-      
-          .code {
-             /* margin-bottom: -1px;*/
-              /*border-top-left-radius:2px;*/
-              padding: 10px 0;
-              overflow: auto;
-          }
-      
-      
-      
-          .code pre{
-              /*padding-left:12px;*/
-      		line-height: 14px;
-              min-height:14px;
-      		padding:4px 10px;
-          }
-      
-          /* Source unavailable */
-          p.unavailable {
-              padding: 20px 0 40px 0;
-              text-align: center;
-              color: #b99;
-              font-weight: bold;
-          }
-      
-          p.unavailable:before {
-              content: '\00d7';
-              display: block;
-      
-              color: #daa;
-      
-              text-align: center;
-              font-size: 40pt;
-              font-weight: normal;
-              margin-bottom: -10px;
-          }
-      
-      
-      
-          .code .highlight, .code_linenums .highlight {
-              background: rgba(109, 240, 24, 0.26);
-              /*animation: highlight 400ms linear 1;*/
-          }
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      		 /* REPL shell */
-          .console {
-              padding: 0 1px 10px 1px;
-              border-bottom-left-radius: 2px;
-              border-bottom-right-radius: 2px;
-          }
-      
-          .console pre {
-              padding: 10px 10px 0 10px;
-              max-height: 400px;
-              overflow-x: none;
-              overflow-y: auto;
-              margin-bottom: -3px;
-              word-wrap: break-word;
-              white-space: pre-wrap;
-          }
-      
-          /* .prompt > span + input */
-          .console .prompt {
-              display: table;
-              width: 100%;
-          }
-      
-          .console .prompt span,
-          .console .prompt input {
-              display: table-cell;
-          }
-      
-          .console .prompt span {
-              width: 1%;
-              padding-right: 5px;
-              padding-left: 10px;
-          }
-      
-          .console .prompt input {
-              width: 99%;
-          }
-      
-      
-      	/* Input box */
-          .console input,
-          .console input:focus {
-              outline: 0;
-              border: 0;
-              padding: 0;
-              background: transparent;
-              margin: 0;
-          }
-      
-          /* Hint text */
-          .hint {
-              margin: 15px 0 0 0;
-              font-size: 8pt;
-              color: #8080a0;
-              padding: 10px;
-      		background-color: #f1f1f1;
-          }
-      
-          .hint:before {
-              content: '\25b2';
-              margin-right: 5px;
-              opacity: 0.5;
-          }
-      
-          /* ---------------------------------------------------------------------
-           * Variable infos
-           * --------------------------------------------------------------------- */
-      
-          .sub {
-              padding: 10px 0;
-              margin: 10px 0;
-          }
-      /*
-          .sub:before {
-              content: '';
-              display: block;
-              width: 100%;
-              height: 4px;
-      
-              border-radius: 2px;
-              background: rgba(0, 150, 200, 0.05);
-              box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7), inset 0 0 0 1px rgba(0, 0, 0, 0.04), inset 2px 2px 2px rgba(0, 0, 0, 0.07);
-          }*/
-      
-          .sub h3 {
-              color: #b366a4;
-              padding: 8px;
-              border: none;
-              font-size: 1.5em;
-              display: inline-block;
-              width: auto;
-              border-radius: 4px;
-              margin: 10px 0;
-              background-color: #f1f2ff;
-              margin-left: 14px;
-              /* padding-left: 10px; */
-              /*text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
-      
-              -webkit-font-smoothing: antialiased;*/
-          }
-      
-          .sub .inset {
-              overflow-y: auto;
-      		padding: 10px;
-          }
-      
-          .sub table {
-              table-layout: fixed;
-          }
-      
-          .sub table td {
-              /*border-top: dotted 1px #ddd;*/
-              padding: 7px 1px;
-          }
-      
-          .sub table td.name {
-              width: 150px;
-              font-weight: bold;
-              font-size: 0.8em;
-              padding-right: 20px;
-              word-wrap: break-word;
-          }
-      
-      	.sub table td.name span {
-       		padding: 5px;
-          color: #795da3;
-          font-family: monospace;
-          font-size: 13px;
-      	}
-      
-          .sub table td pre {
-              max-height: 15em;
-              overflow-y: auto;
-          }
-      
-          .sub table td pre {
-              width: 100%;
-      
-              word-wrap: break-word;
-              white-space: normal;
-          }
-      
-          /* "(object doesn't support inspect)" */
-          .sub .unsupported {
-            font-family: sans-serif;
-            color: #777;
-          }
-      
-          /* ---------------------------------------------------------------------
-           * Scrollbar
-           * --------------------------------------------------------------------- */
-      
-          nav.sidebar::-webkit-scrollbar,
-          .inset pre::-webkit-scrollbar,
-          .console pre::-webkit-scrollbar,
-          .code::-webkit-scrollbar {
-              width: 10px;
-              height: 10px;
-          }
-      
-          .inset pre::-webkit-scrollbar-thumb,
-          .console pre::-webkit-scrollbar-thumb,
-          .code::-webkit-scrollbar-thumb {
-              background: #ccc;
-              border-radius: 5px;
-          }
-      
-          nav.sidebar::-webkit-scrollbar-thumb {
-              background: rgba(0, 0, 0, 0.0);
-              border-radius: 5px;
-          }
-      
-          nav.sidebar:hover::-webkit-scrollbar-thumb {
-              background-color: #999;
-              background: -webkit-linear-gradient(left, #aaa, #999);
-          }
-      
-          .console pre:hover::-webkit-scrollbar-thumb,
-          .inset pre:hover::-webkit-scrollbar-thumb,
-          .code:hover::-webkit-scrollbar-thumb {
-              background: #888;
-          }
-      
-      	.console-c {
-      		padding-top: 15px;
-      		padding-left: 0;
-      		padding-right: 0;
-      		padding-bottom: 0;
-      		margin: 15px;
-      		border: 2px solid #ccc;
-      		border-radius: 4px;
-      	}
-    </style>
-  </head>
-  <body>
+<head>
+    <title><%= exception_type %> at <%= request_path %></title>
+</head>
+<body>
     <%# Stylesheets are placed in the <body> for Turbolinks compatibility. %>
+    <style>
+    /* Basic reset */
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        vertical-align: top;
+        text-align: left;
+    }
+
+    textarea {
+        resize: none;
+    }
+
+    body {
+        font-size: 10pt;
+    }
+
+    body, td, input, textarea {
+        font-family: helvetica neue, lucida grande, sans-serif;
+        line-height: 1.5;
+        color: #333;
+        text-shadow: none;
+    }
+
+    html {
+        background: #f0f0f5;
+    }
+
+    .clearfix::after{
+        clear: both;
+        content: ".";
+        display: block;
+        height: 0;
+        visibility: hidden;
+    }
+
+    /* ---------------------------------------------------------------------
+     * Basic layout
+     * --------------------------------------------------------------------- */
+
+    /* Small */
+    @media screen and (max-width: 1100px) {
+        html {
+            overflow-y: scroll;
+        }
+
+        body {
+            margin: 0 20px;
+        }
+
+        header.exception {
+            margin: 0 -20px;
+        }
+
+        nav.sidebar {
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        ul.frames {
+            max-height: 200px;
+            overflow: auto;
+        }
+    }
+
+    /* Wide */
+    @media screen and (min-width: 1100px) {
+        header.exception {
+           position: fixed;
+           top: 0;
+           left: 0;
+           right: 0;
+        }
+
+        nav.sidebar,
+        .frame_info {
+            position: fixed;
+            top: 95px;
+            bottom: 0;
+
+            box-sizing: border-box;
+
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        nav.sidebar {
+            width: 40%;
+            left: 20px;
+            top: 115px;
+            bottom: 20px;
+        }
+
+        .frame_info {
+            right: 0;
+            left: 40%;
+
+            padding: 20px;
+            padding-left: 10px;
+            margin-left: 30px;
+        }
+    }
+
+    nav.sidebar {
+        background: #f8f8f8;
+        border-top:0;
+        border-bottom: 0;
+        border-radius: 3px;
+        box-shadow: none;
+		border: 2px solid #ccc;
+	}
+
+    /* ---------------------------------------------------------------------
+     * Header
+     * --------------------------------------------------------------------- */
+
+    header.exception {
+	        font-family: Consolas, Hack, FiraCode, "Fira Code", menlo, lucida console, monospace;
+
+        padding: 18px 20px;
+
+        height: 59px;
+        min-height: 59px;
+
+        overflow: hidden;
+
+        background-color: #006064;
+        color: #aaa;
+        text-shadow: none;
+        font-weight: 200;
+        box-shadow: none;
+        -webkit-text-smoothing: antialiased;
+    }
+
+    /* Heading */
+    header.exception h2 {
+        font-weight: 200;
+        font-size: 11pt;
+    }
+
+    header.exception h2,
+    header.exception p {
+        line-height: 1.4em;
+        overflow: hidden;
+        white-space: pre;
+        text-overflow: ellipsis;
+    }
+
+    header.exception h2 strong {
+        font-weight: 700;
+        color: #fcfcfc;
+    }
+
+    header.exception p {
+        font-weight: 200;
+        font-size: 20pt;
+        color: white;
+    }
+
+    header.exception:hover {
+        height: auto;
+        z-index: 2;
+    }
+
+    header.exception:hover h2,
+    header.exception:hover p {
+        padding-right: 20px;
+        overflow-y: auto;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        height: auto;
+        max-height: 7.5em;
+    }
+
+    @media screen and (max-width: 1100px) {
+        header.exception {
+            height: auto;
+        }
+
+        header.exception h2,
+        header.exception p {
+            padding-right: 20px;
+            overflow-y: auto;
+            word-wrap: break-word;
+            height: auto;
+            max-height: 7em;
+        }
+    }
+
+    <%#
+    /* Light theme */
+    header.exception {
+        text-shadow: 0 1px 0 rgba(250, 250, 250, 0.6);
+        background: rgba(200,100,50,0.10);
+        color: #977;
+    }
+    header.exception h2 strong {
+        color: #533;
+    }
+    header.exception p {
+        color: #744;
+    }
+    %>
+
+    /* ---------------------------------------------------------------------
+     * Navigation
+     * --------------------------------------------------------------------- */
+
+    nav.tabs {
+        border-bottom: solid 1px #ddd;
+
+        background-color: #eee;
+        text-align: center;
+
+        padding: 6px;
+
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    nav.tabs a {
+        display: inline-block;
+
+        height: 22px;
+        line-height: 22px;
+        padding: 0 10px;
+
+        text-decoration: none;
+        font-size: 8pt;
+        font-weight: bold;
+
+        color: #444;
+        text-shadow: none;
+    }
+
+    nav.tabs a.selected {
+        color: white;
+        background: #d55;
+        border-radius: 3px;
+		padding: 4px 8px;
+		text-shadow: none;
+    }
+
+    nav.tabs a.disabled {
+        text-decoration: line-through;
+        text-shadow: none;
+        cursor: default;
+    }
+
+    /* ---------------------------------------------------------------------
+     * Sidebar
+     * --------------------------------------------------------------------- */
+
+    ul.frames {
+        box-shadow: none;
+		padding: 7px;
+    }
+
+    /* Each item */
+    ul.frames li {
+        background-color: #f8f8f8;
+		border-bottom: 2px solid #f1f1f1;
+        padding: 7px 20px;
+
+        cursor: pointer;
+        overflow: hidden;
+    }
+
+    ul.frames .name,
+    ul.frames .location {
+        overflow: hidden;
+        height: 1.5em;
+
+        white-space: nowrap;
+        word-wrap: none;
+        text-overflow: ellipsis;
+    }
+
+    ul.frames .method {
+        color: #966;
+    }
+
+    ul.frames .location {
+        font-size: 0.85em;
+        font-weight: 400;
+        color: #999;
+    }
+
+    ul.frames .line {
+        font-weight: bold;
+    }
+
+    /* Selected frame */
+    ul.frames li.selected {
+        background: #00838f;
+        box-shadow: none;
+		border-radius: 3px;
+		border-bottom: 2px solid #00838f;
+    }
+
+    ul.frames li.selected .name,
+    ul.frames li.selected .method,
+    ul.frames li.selected .location {
+        color: white;
+        text-shadow: none;
+    }
+
+    ul.frames li.selected .location {
+        opacity: 0.6;
+    }
+
+    /* Iconography */
+    ul.frames li {
+        padding-left: 60px;
+        position: relative;
+    }
+
+    ul.frames li .icon {
+        display: block;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        border-radius: 15px;
+
+        text-align: center;
+
+        background: white;
+        border: solid 2px #ccc;
+
+        font-size: 9pt;
+        font-weight: 200;
+        font-style: normal;
+
+        position: absolute;
+        top: 14px;
+        left: 20px;
+    }
+
+	
+    ul.frames .icon.application {
+        background: #b2ebf2;
+        border-color: #b2ebf2;
+    }
+
+    ul.frames .selected .icon.application {
+        background: #fff;
+        border-color: #fff;
+    }
+
+    ul.frames .icon.application:before {
+        content: 'A';
+        color: black;
+        text-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Responsiveness -- flow to single-line mode */
+    @media screen and (max-width: 1100px) {
+        ul.frames li {
+            padding-top: 6px;
+            padding-bottom: 6px;
+            padding-left: 36px;
+            line-height: 1.3;
+        }
+
+        ul.frames li .icon {
+            width: 11px;
+            height: 11px;
+            line-height: 11px;
+
+            top: 7px;
+            left: 10px;
+            font-size: 5pt;
+        }
+
+        ul.frames .name,
+        ul.frames .location {
+            display: inline-block;
+            line-height: 1.3;
+            height: 1.3em;
+        }
+
+        ul.frames .name {
+            margin-right: 10px;
+        }
+    }
+
+    /* ---------------------------------------------------------------------
+     * Monospace
+     * --------------------------------------------------------------------- */
+
+    pre, code, .be-repl input, .be-repl .command-line span, textarea, .code_linenums {
+        font-family: Consolas, Hack, FiraCode, "Fira Code", menlo, lucida console, monospace;
+        font-size: 13px;
+    }
+
+    /* ---------------------------------------------------------------------
+     * Display area
+     * --------------------------------------------------------------------- */
+
+    .trace_info {
+        background: #fff;
+        padding: 6px;
+        border-radius: 3px;
+        margin-bottom: 2px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.03), 1px 1px 0 rgba(0, 0, 0, 0.05), -1px 1px 0 rgba(0, 0, 0, 0.05), 0 0 0 4px rgba(0, 0, 0, 0.04);
+    }
+
+    .code_block{
+        background: #f1f1f1;
+        border-left: 1px solid #ccc;
+    }
+
+    /* Titlebar */
+    .trace_info .title {
+        background: #f1f1f1;
+
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        overflow: hidden;
+        padding: 6px 10px;
+
+        border: solid 1px #ccc;
+        border-bottom: 0;
+
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+    }
+
+    .trace_info .title .name,
+    .trace_info .title .location {
+        font-size: 9pt;
+        line-height: 26px;
+        height: 26px;
+        overflow: hidden;
+    }
+
+    .trace_info .title .location {
+        float: left;
+        font-weight: bold;
+        font-size: 10pt;
+    }
+
+    .trace_info .title .location a {
+        color:inherit;
+        text-decoration:none;
+        border-bottom:1px solid #aaaaaa;
+    }
+
+    .trace_info .title .location a:hover {
+        border-color:#666666;
+    }
+
+    .trace_info .title .name {
+        float: right;
+        font-weight: 200;
+    }
+
+    .code, .be-console, .unavailable {
+        background: #fff;
+        padding: 3px;
+
+        box-shadow: none;
+		border: 2px solid #ccc;
+		}
+    .code {
+     
+		border-bottom: none;
+		}
+
+    .code_linenums{
+        background:#f1f1f1;
+        padding-top:12px;
+        padding-bottom:9px;
+        float:left;
+    }
+
+    .code_linenums span{
+        display:block;
+		padding: 3px 13px;
+    }
+
+    .code {
+        margin-bottom: -1px;
+        border-top-left-radius:2px;
+        padding: 10px 0;
+        overflow: auto;
+    }
+
+    .code pre{
+       
+    min-height: 19px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    }
+
+    /* Source unavailable */
+    p.unavailable {
+        padding: 20px 0 40px 0;
+        text-align: center;
+        color: #b99;
+        font-weight: bold;
+    }
+
+    p.unavailable:before {
+        content: '\00d7';
+        display: block;
+
+        color: #daa;
+
+        text-align: center;
+        font-size: 40pt;
+        font-weight: normal;
+        margin-bottom: -10px;
+    }
+
+    @-webkit-keyframes highlight {
+        0%   { background: rgba(220, 30, 30, 0.3); }
+        100% { background: rgba(220, 30, 30, 0.1); }
+    }
+    @-moz-keyframes highlight {
+        0%   { background: rgba(220, 30, 30, 0.3); }
+        100% { background: rgba(220, 30, 30, 0.1); }
+    }
+    @keyframes highlight {
+        0%   { background: rgba(220, 30, 30, 0.3); }
+        100% { background: rgba(220, 30, 30, 0.1); }
+    }
+
+    .code .highlight, .code_linenums .highlight {
+        background: rgba(220, 30, 30, 0.1);
+        -webkit-animation: highlight 400ms linear 1;
+        -moz-animation: highlight 400ms linear 1;
+        animation: highlight 400ms linear 1;
+    }
+
+    /* REPL shell */
+    .be-console {
+        padding: 0 1px 10px 1px;
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+    }
+
+    .be-console pre {
+        padding: 10px 10px 0 10px;
+        max-height: 400px;
+        overflow-x: none;
+        overflow-y: auto;
+        margin-bottom: -3px;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+    }
+
+    /* .command-line > span + input */
+    .be-console .command-line {
+        display: table;
+        width: 100%;
+    }
+
+    .be-console .command-line span,
+    .be-console .command-line input {
+        display: table-cell;
+    }
+
+    .be-console .command-line span {
+        width: 1%;
+        padding-right: 5px;
+        padding-left: 10px;
+        white-space: pre;
+    }
+
+    .be-console .command-line input {
+        width: 99%;
+    }
+
+    /* Input box */
+    .be-console input,
+    .be-console input:focus {
+        outline: 0;
+        border: 0;
+        padding: 0;
+        background: transparent;
+        margin: 0;
+    }
+
+    /* Hint text */
+    .hint {
+        margin: 15px 0 20px 0;
+        font-size: 8pt;
+        color: #8080a0;
+        padding-left: 20px;
+    }
+
+    .hint:before {
+        content: '\25b2';
+        margin-right: 5px;
+        opacity: 0.5;
+    }
+
+    /* ---------------------------------------------------------------------
+     * Variable infos
+     * --------------------------------------------------------------------- */
+
+    .sub {
+        padding: 10px 0;
+        margin: 10px 0;
+    }
+
+    .sub:before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 4px;
+
+        border-radius: 2px;
+        background: rgba(0, 150, 200, 0.05);
+        box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7), inset 0 0 0 1px rgba(0, 0, 0, 0.04), inset 2px 2px 2px rgba(0, 0, 0, 0.07);
+    }
+
+    .sub h3 {
+        color: #e91e63;
+        font-size: 1.1em;
+        margin: 10px 0;
+        text-shadow: none;
+	text-transform: uppercase;
+
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .sub .inset {
+        overflow-y: auto;
+    }
+
+    .sub table {
+        table-layout: fixed;
+    }
+
+    .sub table td {
+        border-top: dotted 1px #ddd;
+        padding: 7px 1px;
+    }
+
+    .sub table td.name {
+        width: 150px;
+
+        font-weight: bold;
+        font-size: 1.0em;
+		color: #00838f;
+        padding-right: 20px;
+		
+
+        word-wrap: break-word;
+    }
+
+    .sub table td pre {
+        max-height: 15em;
+        overflow-y: auto;
+    }
+
+    .sub table td pre {
+        width: 100%;
+
+        word-wrap: break-word;
+        white-space: normal;
+    }
+
+    /* "(object doesn't support inspect)" */
+    .sub .unsupported {
+      font-family: sans-serif;
+      color: #777;
+    }
+
+    /* ---------------------------------------------------------------------
+     * Scrollbar
+     * --------------------------------------------------------------------- */
+
+    nav.sidebar::-webkit-scrollbar,
+    .inset pre::-webkit-scrollbar,
+    .be-console pre::-webkit-scrollbar,
+    .code::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    .inset pre::-webkit-scrollbar-thumb,
+    .be-console pre::-webkit-scrollbar-thumb,
+    .code::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 5px;
+    }
+
+    nav.sidebar::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.0);
+        border-radius: 5px;
+    }
+
+    nav.sidebar:hover::-webkit-scrollbar-thumb {
+        background-color: #999;
+        background: -webkit-linear-gradient(left, #aaa, #999);
+    }
+
+    .be-console pre:hover::-webkit-scrollbar-thumb,
+    .inset pre:hover::-webkit-scrollbar-thumb,
+    .code:hover::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+    </style>
+
     <%# IE8 compatibility crap %>
     <script>
-      (function() {
-              var elements = ["section", "nav", "header", "footer", "audio"];
-              for (var i = 0; i < elements.length; i++) {
-                  document.createElement(elements[i]);
-              }
-          })();
+    (function() {
+        var elements = ["section", "nav", "header", "footer", "audio"];
+        for (var i = 0; i < elements.length; i++) {
+            document.createElement(elements[i]);
+        }
+    })();
     </script>
+
     <%#
       If Rails's Turbolinks is used, the Better Errors page is probably
       rendered in the host app's layout. Let's empty out the styles of the
@@ -767,235 +735,26 @@
     %>
     <script>
       if (window.Turbolinks) {
-                for(var i=0; i < document.styleSheets.length; i++) {
-                    if(document.styleSheets[i].href)
-                        document.styleSheets[i].disabled = true;
-                }
-                document.addEventListener("page:restore", function restoreCSS(e) {
-                    for(var i=0; i < document.styleSheets.length; i++) {
-                        document.styleSheets[i].disabled = false;
-                    }
-                    document.removeEventListener("page:restore", restoreCSS, false);
-                });
-            }
+          for(var i=0; i < document.styleSheets.length; i++) {
+              if(document.styleSheets[i].href)
+                  document.styleSheets[i].disabled = true;
+          }
+          document.addEventListener("page:restore", function restoreCSS(e) {
+              for(var i=0; i < document.styleSheets.length; i++) {
+                  document.styleSheets[i].disabled = false;
+              }
+              document.removeEventListener("page:restore", restoreCSS, false);
+          });
+      }
     </script>
-    <header>
-      <div class="container">
-        <h1 class="logo">Ruby::Exception</h1>
-        <div class="help-link">
-          <a href="https://www.ruby-lang.org">
-            <span class="icon"></span>
-            <span class="hidden-xs-down">Ruby</span> Docs
-          </a>
-        </div>
-        <div class="help-link">
-          <a href="http://rubyonrails.org/">
-            <span class="icon"></span>
-            <span class="hidden-xs-down">Rails</span> Docs
-          </a>
-        </div>
-      </div>
-    </header>
-    <div class="exception-summary">
-      <div class="exception-metadata exception">
-        <div class="container">
-          <h2 class="exception-hierarchy">
-            <%= exception.type %>
-          </h2>
-          <h2 class="exception-http">
-            at <small><%= request_path %></small>
-          </h2>
-        </div>
-      </div>
-      <div class="container">
-        <div class="exception-message-wrapper">
-          <h1 class="break-long-words exception-message long">
-            <%= exception.message %>
-          </h1>
-          <!-- <div class="exception-illustration hidden-xs-down"> -->
-          <!-- {{ include('@Twig/images/symfony-ghost.svg') }} -->
-          <!-- </div> -->
-        </div>
-      </div>
+
+    <div class='top'>
+        <header class="exception">
+            <h2><strong><%= exception_type %></strong> <span>at <%= request_path %></span></h2>
+            <p><%= exception_message %></p>
+        </header>
     </div>
-    <div class="container">
-      <div class="sf-tabs">
-        <div class="tab">
-          <!-- <h3 class="tab-title"> -->
-          <!-- <%= exception.type %> <span class="badge">10</span> -->
-          <!-- </h3> -->
-          <div id="framed" class="tab-content">
-            <% backtrace_frames.each_with_index do |frame, index| %>
-              <% if index >= 1 then break end %>
-                <div  class="trace trace-as-html <%= frame.context %>" data-context="<%= frame.context %>" data-index="<%= index %>">
-                  <table class="trace-details">
-                    <thead class="trace-head">
-                      <tr>
-                        <th class="sf-toggle" data-toggle-selector="#trace-html-<%= index %>">
-                          <h3 class="trace-class">
-                            <span class="trace-namespace">
-                              <%= frame.class_name %>#<%= frame.name %>
-                            </span>
-                            <%= exception.type %> <!--at <%= frame.line  %>-->
-                            <!-- <span class="icon icon-close">x</span> -->
-                            <!-- <span class="icon icon-open">o</span> -->
-                          </h3>
-                          <!-- <p class="break-long-words trace-message"><%= frame.pretty_path %></p> -->
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody id="trace-html-<%= index %>" class="sf-toggle-content">
-                      <% backtrace_frames.each_with_index do |frame, index| %>
-                        <% if index >= 0 %>
-                          <% frame.inspect %>
-                          <tr>
-                            <td class="frame trace-line" data-context="<%= frame.context %>" data-index="<%= index %>" data-toggle-selector="#trace-html-<%= index %>" data-toggle-initial="">
-                              <!-- <span class="icon icon-close">x</span> -->
-                              <span class="icon icon-open"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAQCAYAAAAvf+5AAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAALJJREFUKJHN0D1qgmEQBOBHjD+FPyQqBFQszCVTeIEU3iCFtSBIqgRCLFIYQgIWYmkIeA4tXOH1U6ydZtmZYdgdjnGHNzy4gAq+sMUfOudMZXyEaRZzhWZqKuAlxGfk8Bj7D+oHYw2/GCOfBDzhH900tYHimZPuLz11rWihlOFyaKdEHQtMHNczxAa9A3GDqX3Bo0gaxP6NappawnuInzGX9v2eoIJ5mNbZ+7K4xSv6WWEHZrcgSx9aU+YAAAAASUVORK5CYII="></span>
-                              <span class="trace-class"><%= frame.class_name %></span>::<span class="trace-method"><%= frame.name %></span><span class="trace-arguments">(<%= frame.frame_binding %>)</span>
-                              <span class="block trace-file-path">
-                                <%= frame.pretty_path %> in
-                                <!-- <a href="#">sdfsdf<strong>part</strong></a> -->
-                                (<b>line <%= frame.line %></b>)
-                              </span>
-                              <br/>
-                              <div class="trace-code sf-toggle-content">
-                                <div class="frame_info" id="frame_info_<%= index %>" <% if index != 0 then %>style="display:none;"<% end %>>
-                                  <header class="trace_info clearfix">
-                                    <div class="title">
-                                      <h2 class="name"><%= frame.name %></h2>
-                                      <div class="location"><span class="filename"><a href="<%= editor_url(frame) %>"><%= frame.filename %></a></span></div>
-                                    </div>
-                                    <div class="code_block clearfix">
-                                      <%== html_formatted_code_block frame %>
-                                    </div>
-                                  </header>
-                                  <div class="console-c">
-                                    <% if BetterErrors.binding_of_caller_available? && frame.frame_binding %>
-                                      <div class="repl">
-                                        <div class="console">
-                                          <pre></pre>
-                                          <div class="prompt"><span>&gt;&gt;</span> <input/></div>
-                                        </div>
-                                      </div>
-                                    <% end %>
-                                    <% if BetterErrors.binding_of_caller_available? && frame.frame_binding %>
-                                      <div class="hint">
-                                        This is a live shell. Type in here.
-                                      </div>
-                                      <!--<div class="variable_info"></div>-->
-                                    <% end %>
-                                    <% unless BetterErrors.binding_of_caller_available? %>
-                                      <div class="hint">
-                                        <strong>Tip:</strong> add <code>gem "binding_of_caller"</code> to your Gemfile to enable the REPL and local/instance variable inspection.
-                                      </div>
-                                    <% end %>
-                                  </div>
-                                  <div class="sub">
-                                    <h3>Request info</h3>
-                                    <div class='inset variables'>
-                                      <table class="var_table">
-                                        <% if rails_params %>
-                                          <tr>
-                                            <td  align="right"  class="name"><span>Request parameters</span></td>
-                                            <td>
-                                              <pre><%== inspect_value rails_params %></pre>
-                                            </td>
-                                          </tr>
-                                        <% end %>
-                                        <% if rack_session %>
-                                          <tr>
-                                            <td  align="right"  class="name"><span>Rack session</span></td>
-                                            <td>
-                                              <pre><%== inspect_value rack_session %></pre>
-                                            </td>
-                                          </tr>
-                                        <% end %>
-                                      </table>
-                                    </div>
-                                  </div>
-                                  <div class="sub">
-                                    <h3>Local Variables</h3>
-                                    <div class='inset variables'>
-                                      <table class="var_table">
-                                        <% frame.local_variables.each do |name, value| %>
-                                          <tr>
-                                            <td align="right" class="name"><span><%= name %></span></td>
-                                            <td>
-                                              <pre><%== inspect_value value %></pre>
-                                            </td>
-                                          </tr>
-                                        <% end %>
-                                      </table>
-                                    </div>
-                                  </div>
-                                  <div class="sub">
-                                    <h3>Instance Variables</h3>
-                                    <div class="inset variables">
-                                      <table class="var_table">
-                                        <% frame.instance_variables.each do |name, value| %>
-                                          <tr>
-                                            <td align="right" class="name"><span><%= name %></span></td>
-                                            <td>
-                                              <pre><%== inspect_value value %></pre>
-                                            </td>
-                                          </tr>
-                                        <% end %>
-                                      </table>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                        <% end %>
-                      <% end %>
-                    </tbody>
-                  </table>
-                </div>
-              <% end %>
-            </div>
-          </div>
-          <!-- <div class="tab {{ logger is empty ? 'disabled' }}"> -->
-          <!-- <h3 class="tab-title"> -->
-          <!-- Logs -->
-          <!-- {% if logger.counterrors ?? false %}<span class="badge status-error">{{ logger.counterrors }}</span>{% endif %} -->
-          <!-- </h3> -->
-          <!-- <div class="tab-content"> -->
-          <!-- {% if logger %} -->
-          <!-- {{ include('@Twig/Exception/logs.html.twig', { logs: logger.logs }, with_context = false)  }} -->
-          <!-- {% else %} -->
-          <!-- <div class="empty"> -->
-          <!-- <p>No log messages</p> -->
-          <!-- </div> -->
-          <!-- {% endif %} -->
-          <!-- </div> -->
-          <!-- </div> -->
-          <!-- <div class="tab"> -->
-          <!-- <h3 class="tab-title"> -->
-          <!-- {% if exception_as_array|length > 1 %} -->
-          <!-- Stack Traces <span class="badge">{{ exception_as_array|length }}</span> -->
-          <!-- {% else %} -->
-          <!-- Stack Trace -->
-          <!-- {% endif %} -->
-          <!-- </h3> -->
-          <!-- <div class="tab-content"> -->
-          <!-- {% for e in exception_as_array %} -->
-          <!-- {{ include('@Twig/Exception/traces_text.html.twig', { exception: e, index: loop.index, num_exceptions: loop.length }, with_context = false) }} -->
-          <!-- {% endfor %} -->
-          <!-- </div> -->
-          <!-- </div> -->
-          <!-- {% if currentContent is not empty %} -->
-          <!-- <div class="tab"> -->
-          <!-- <h3 class="tab-title">Output content</h3> -->
-          <!-- <div class="tab-content"> -->
-          <!-- {{ currentContent }} -->
-          <!-- </div> -->
-          <!-- </div> -->
-          <!-- {% endif %} -->
-        </div>
-      </div>
-      <!--
+
     <section class="backtrace">
         <nav class="sidebar">
             <nav class="tabs">
@@ -1003,249 +762,293 @@
                 <a href="#" id="all_frames">All Frames</a>
             </nav>
             <ul class="frames">
-              
+                <% backtrace_frames.each_with_index do |frame, index| %>
+                    <li class="<%= frame.context %>" data-context="<%= frame.context %>" data-index="<%= index %>">
+                        <span class='stroke'></span>
+                        <i class="icon <%= frame.context %>"></i>
+                        <div class="info">
+                            <div class="name">
+                                <strong><%= frame.class_name %></strong><span class='method'><%= frame.method_name %></span>
+                            </div>
+                            <div class="location">
+                                <span class="filename"><%= frame.pretty_path %></span>, line <span class="line"><%= frame.line %></span>
+                            </div>
+                        </div>
+                    </li>
+                <% end %>
             </ul>
         </nav>
 
-      
+        <% backtrace_frames.each_with_index do |frame, index| %>
+            <div class="frame_info" id="frame_info_<%= index %>" style="display:none;"></div>
+        <% end %>
     </section>
-	-->
-    </body>
-    <script>
-      (function() {
-      
-          var OID = "<%= id %>";
-      
-          var previousFrame = null;
-          var previousFrameInfo = null;
-          var allFrames = document.querySelectorAll("#framed .frame");
-          var allFrameInfos = document.querySelectorAll(".frame_info");
-      
-          function apiCall(method, opts, cb) {
-              var req = new XMLHttpRequest();
-              req.open("POST", <%== uri_prefix.gsub("<", "&lt;").inspect %> + "/__better_errors/" + OID + "/" + method, true);
-              req.setRequestHeader("Content-Type", "application/json");
-              req.send(JSON.stringify(opts));
-              req.onreadystatechange = function() {
-                  if(req.readyState == 4) {
-                      var res = JSON.parse(req.responseText);
-                      cb(res);
-                  }
-              };
-          }
-      
-          function escapeHTML(html) {
-              return html.replace(/&/, "&amp;").replace(/</g, "&lt;");
-          }
-      
-          function REPL(index) {
-              this.index = index;
-      
-              var previousCommands = JSON.parse(localStorage.getItem("better_errors_previous_commands"));
-              if(previousCommands === null) {
-                localStorage.setItem("better_errors_previous_commands", JSON.stringify([]));
-                previousCommands = [];
-              }
-      
-              this.previousCommandOffset = previousCommands.length;
-          }
-      
-          REPL.all = [];
-      
-          REPL.prototype.install = function(containerElement) {
-              this.container = containerElement;
-      
-              this.promptElement  = this.container.querySelector(".prompt span");
-              this.inputElement   = this.container.querySelector("input");
-              this.outputElement  = this.container.querySelector("pre");
-      
-              var self = this;
-              this.inputElement.onkeydown = function(ev) {
-                  self.onKeyDown(ev);
-              };
-      
-              this.setPrompt(">>");
-      
-              REPL.all[this.index] = this;
-          }
-      
-          REPL.prototype.focus = function() {
-              this.inputElement.focus();
-          };
-      
-          REPL.prototype.setPrompt = function(prompt) {
-              this._prompt = prompt;
-              this.promptElement.innerHTML = escapeHTML(prompt);
-          };
-      
-          REPL.prototype.getInput = function() {
-              return this.inputElement.value;
-          };
-      
-          REPL.prototype.setInput = function(text) {
-              this.inputElement.value = text;
-      
-              if(this.inputElement.setSelectionRange) {
-                  // set cursor to end of input
-                  this.inputElement.setSelectionRange(text.length, text.length);
-              }
-          };
-      
-          REPL.prototype.writeRawOutput = function(output) {
-              this.outputElement.innerHTML += output;
-              this.outputElement.scrollTop = this.outputElement.scrollHeight;
-          };
-      
-          REPL.prototype.writeOutput = function(output) {
-              this.writeRawOutput(escapeHTML(output));
-          };
-      
-          REPL.prototype.sendInput = function(line) {
-              var self = this;
-              apiCall("eval", { "index": this.index, source: line }, function(response) {
-                  if(response.error) {
-                      self.writeOutput(response.error + "\n");
-                  }
-                  self.writeOutput(self._prompt + " ");
-                  self.writeRawOutput(response.highlighted_input + "\n");
-                  self.writeOutput(response.result);
-                  self.setPrompt(response.prompt);
-                  self.setInput(response.prefilled_input);
-              });
-          };
-      
-          REPL.prototype.onEnterKey = function() {
-              var text = this.getInput();
-              if(text != "" && text !== undefined) {
-                  var previousCommands = JSON.parse(localStorage.getItem("better_errors_previous_commands"));
-                  this.previousCommandOffset = previousCommands.push(text);
-                  if(previousCommands.length > 100) {
-                    previousCommands.splice(0, 1);
-                    this.previousCommandOffset -= 1;
-                  }
-                  localStorage.setItem("better_errors_previous_commands", JSON.stringify(previousCommands));
-              }
-              this.setInput("");
-              this.sendInput(text);
-          };
-      
-          REPL.prototype.onNavigateHistory = function(direction) {
-              this.previousCommandOffset += direction;
-              var previousCommands = JSON.parse(localStorage.getItem("better_errors_previous_commands"));
-      
-              if(this.previousCommandOffset < 0) {
-                  this.previousCommandOffset = -1;
-                  this.setInput("");
-                  return;
-              }
-      
-              if(this.previousCommandOffset >= previousCommands.length) {
-                  this.previousCommandOffset = previousCommands.length;
-                  this.setInput("");
-                  return;
-              }
-      
-              this.setInput(previousCommands[this.previousCommandOffset]);
-          };
-      
-          REPL.prototype.onKeyDown = function(ev) {
-              if(ev.keyCode == 13) {
-                  this.onEnterKey();
-              } else if(ev.keyCode == 38 || (ev.ctrlKey && ev.keyCode == 80)) {
-                  // the user pressed the up arrow or Ctrl-P
-                  this.onNavigateHistory(-1);
-                  ev.preventDefault();
-                  return false;
-              } else if(ev.keyCode == 40 || (ev.ctrlKey && ev.keyCode == 78)) {
-                  // the user pressed the down arrow or Ctrl-N
-                  this.onNavigateHistory(1);
-                  ev.preventDefault();
-                  return false;
-              }
-          };
-      
-          function switchTo(el, show) {
-      
-      		if(!show) return;
-              if(previousFrameInfo) previousFrameInfo.style.display = "none";
-              /*previousFrameInfo = el;*/
-          		for(var i = 0; i < allFrameInfos.length; i++) {
-          			(function(i, e) {
-          				var e = allFrameInfos[i];
-          				e.style.display = "none";
-          			})(i);
-          		}
-      
-      
-              el.style.display = "block";
-      
-              var replInput = el.querySelector('.console input');
-              if (replInput) replInput.focus();
-          }
-      
-          function selectFrameInfo(index, show = true) {
-      
-              var el = allFrameInfos[index];
-      
-              if(el) {
-      
-                  if (el.loaded) {
-                      return switchTo(el, show);
-                  }
-      
-                  //apiCall("variables", { "index": index }, function(response) {
-      
-      
-                      el.loaded = true;
-                     // if(response.error) {
-                      //    el.innerHTML = "<span class='error'>" + escapeHTML(response.error) + "</span>";
-                    //  } else {
-                          //el.innerHTML = response.html;
-      
-                          var repl = el.querySelector(".repl .console");
-                          if(repl) {
-                              new REPL(index).install(repl);
-                          }
-      
-                          switchTo(el, show);
-                   //   }
-                 // });
-              }
-          }
-      
-          for(var i = 0; i < allFrames.length; i++) {
-              (function(i, el) {
-                  var el = allFrames[i];
-      			selectFrameInfo(el.attributes["data-index"].value, false);
-                  el.onclick = function() {
-                      if(previousFrame) {
-                          //previousFrame.className = "";
-                      }
-                      //el.className = "selected";
-                      previousFrame = el;
-      
-                      selectFrameInfo(el.attributes["data-index"].value);
-                  };
-              })(i);
-          }
-      
-      
-      //	selectFrameInfo(0);
-      
-          // Click the first application frame
-          /*(
-           document.querySelector(".framed .frame.application") ||
-         document.querySelector(".framed .frame")
-          ).onclick();*/
-      
-          // This is the second query performed for frames; maybe the 'allFrames' list
-          // currently used and this list can be better used to avoid the repetition:
-          var applicationFramesCount = document.querySelectorAll(
-              ".frames .frame[data-context=application]"
-          ).length;
-      
-      
-      })();
-    </script>
-  </html>
-  <!-- generated by Much Better Errors in <%= Time.now.to_f - @start_time %> seconds -->
+</body>
+<script>
+(function() {
+
+    var OID = "<%= id %>";
+
+    var previousFrame = null;
+    var previousFrameInfo = null;
+    var allFrames = document.querySelectorAll("ul.frames li");
+    var allFrameInfos = document.querySelectorAll(".frame_info");
+
+    function apiCall(method, opts, cb) {
+        var req = new XMLHttpRequest();
+        req.open("POST", "//" + window.location.host + <%== uri_prefix.gsub("<", "&lt;").inspect %> + "/__better_errors/" + OID + "/" + method, true);
+        req.setRequestHeader("Content-Type", "application/json");
+        req.send(JSON.stringify(opts));
+        req.onreadystatechange = function() {
+            if(req.readyState == 4) {
+                var res = JSON.parse(req.responseText);
+                cb(res);
+            }
+        };
+    }
+
+    function escapeHTML(html) {
+        return html.replace(/&/, "&amp;").replace(/</g, "&lt;");
+    }
+
+    function REPL(index) {
+        this.index = index;
+
+        var previousCommands = JSON.parse(localStorage.getItem("better_errors_previous_commands"));
+        if(previousCommands === null) {
+          localStorage.setItem("better_errors_previous_commands", JSON.stringify([]));
+          previousCommands = [];
+        }
+
+        this.previousCommandOffset = previousCommands.length;
+    }
+
+    REPL.all = [];
+
+    REPL.prototype.install = function(containerElement) {
+        this.container = containerElement;
+
+        this.promptElement  = this.container.querySelector(".command-line .prompt");
+        this.inputElement   = this.container.querySelector("input");
+        this.outputElement  = this.container.querySelector("pre");
+
+        var self = this;
+        this.inputElement.onkeydown = function(ev) {
+            self.onKeyDown(ev);
+        };
+
+        this.setPrompt(">>");
+
+        REPL.all[this.index] = this;
+    }
+
+    REPL.prototype.focus = function() {
+        this.inputElement.focus();
+    };
+
+    REPL.prototype.setPrompt = function(prompt) {
+        this._prompt = prompt;
+        this.promptElement.innerHTML = escapeHTML(prompt);
+    };
+
+    REPL.prototype.getInput = function() {
+        return this.inputElement.value;
+    };
+
+    REPL.prototype.setInput = function(text) {
+        this.inputElement.value = text;
+
+        if(this.inputElement.setSelectionRange) {
+            // set cursor to end of input
+            this.inputElement.setSelectionRange(text.length, text.length);
+        }
+    };
+
+    REPL.prototype.writeRawOutput = function(output) {
+        this.outputElement.innerHTML += output;
+        this.outputElement.scrollTop = this.outputElement.scrollHeight;
+    };
+
+    REPL.prototype.writeOutput = function(output) {
+        this.writeRawOutput(escapeHTML(output));
+    };
+
+    REPL.prototype.sendInput = function(line) {
+        var self = this;
+        apiCall("eval", { "index": this.index, source: line }, function(response) {
+            if(response.error) {
+                self.writeOutput(response.error + "\n");
+            }
+            self.writeOutput(self._prompt + " ");
+            self.writeRawOutput(response.highlighted_input + "\n");
+            self.writeOutput(response.result);
+            self.setPrompt(response.prompt);
+            self.setInput(response.prefilled_input);
+        });
+    };
+
+    REPL.prototype.onEnterKey = function() {
+        var text = this.getInput();
+        if(text != "" && text !== undefined) {
+            var previousCommands = JSON.parse(localStorage.getItem("better_errors_previous_commands"));
+            this.previousCommandOffset = previousCommands.push(text);
+            if(previousCommands.length > 100) {
+              previousCommands.splice(0, 1);
+              this.previousCommandOffset -= 1;
+            }
+            localStorage.setItem("better_errors_previous_commands", JSON.stringify(previousCommands));
+        }
+        this.setInput("");
+        this.sendInput(text);
+    };
+
+    REPL.prototype.onNavigateHistory = function(direction) {
+        this.previousCommandOffset += direction;
+        var previousCommands = JSON.parse(localStorage.getItem("better_errors_previous_commands"));
+
+        if(this.previousCommandOffset < 0) {
+            this.previousCommandOffset = -1;
+            this.setInput("");
+            return;
+        }
+
+        if(this.previousCommandOffset >= previousCommands.length) {
+            this.previousCommandOffset = previousCommands.length;
+            this.setInput("");
+            return;
+        }
+
+        this.setInput(previousCommands[this.previousCommandOffset]);
+    };
+
+    REPL.prototype.onKeyDown = function(ev) {
+        if(ev.keyCode == 13) {
+            this.onEnterKey();
+        } else if(ev.keyCode == 38 || (ev.ctrlKey && ev.keyCode == 80)) {
+            // the user pressed the up arrow or Ctrl-P
+            this.onNavigateHistory(-1);
+            ev.preventDefault();
+            return false;
+        } else if(ev.keyCode == 40 || (ev.ctrlKey && ev.keyCode == 78)) {
+            // the user pressed the down arrow or Ctrl-N
+            this.onNavigateHistory(1);
+            ev.preventDefault();
+            return false;
+        }
+    };
+
+    function switchTo(el) {
+        if(previousFrameInfo) previousFrameInfo.style.display = "none";
+        previousFrameInfo = el;
+
+        el.style.display = "block";
+
+        var replInput = el.querySelector('.be-console input');
+        if (replInput) replInput.focus();
+    }
+
+    function selectFrameInfo(index) {
+        var el = allFrameInfos[index];
+        if(el) {
+            if (el.loaded) {
+                return switchTo(el);
+            }
+
+            apiCall("variables", { "index": index }, function(response) {
+                el.loaded = true;
+                if(response.error) {
+                    el.innerHTML = "<h2 class='error'>" + escapeHTML(response.error) + "</h2>";
+                    if(response.explanation) {
+                      el.innerHTML += "<p class='explanation'>" + escapeHTML(response.explanation) + "</p>";
+                    }
+                    el.innerHTML += "<p><a target='_new' href='https://github.com/charliesome/better_errors'>More about Better Errors</a></p>";
+                } else {
+                    el.innerHTML = response.html;
+
+                    var repl = el.querySelector(".be-repl .be-console");
+                    if(repl) {
+                        new REPL(index).install(repl);
+                    }
+                }
+                switchTo(el);
+            });
+        }
+    }
+
+    for(var i = 0; i < allFrames.length; i++) {
+        (function(i, el) {
+            var el = allFrames[i];
+            el.onclick = function() {
+                if(previousFrame) {
+                    previousFrame.className = "";
+                }
+                el.className = "selected";
+                previousFrame = el;
+
+                selectFrameInfo(el.attributes["data-index"].value);
+            };
+        })(i);
+    }
+
+    // Click the first application frame
+    (
+      document.querySelector(".frames li.application") ||
+      document.querySelector(".frames li")
+    ).onclick();
+
+    // This is the second query performed for frames; maybe the 'allFrames' list
+    // currently used and this list can be better used to avoid the repetition:
+    var applicationFramesCount = document.querySelectorAll(
+        "ul.frames li[data-context=application]"
+    ).length;
+
+    var applicationFramesButtonIsInstalled = false;
+    var applicationFramesButton = document.getElementById("application_frames");
+    var allFramesButton = document.getElementById("all_frames");
+
+    // The application frames button only needs to be bound if
+    // there are actually any application frames to look at.
+    var installApplicationFramesButton = function() {
+        applicationFramesButton.onclick = function() {
+            allFramesButton.className = "";
+            applicationFramesButton.className = "selected";
+            for(var i = 0; i < allFrames.length; i++) {
+                if(allFrames[i].attributes["data-context"].value == "application") {
+                    allFrames[i].style.display = "block";
+                } else {
+                    allFrames[i].style.display = "none";
+                }
+            }
+            return false;
+        };
+
+        applicationFramesButtonIsInstalled = true;
+    }
+
+    allFramesButton.onclick = function() {
+        if(applicationFramesButtonIsInstalled) {
+            applicationFramesButton.className = "";
+        }
+
+        allFramesButton.className = "selected";
+        for(var i = 0; i < allFrames.length; i++) {
+            allFrames[i].style.display = "block";
+        }
+        return false;
+    };
+
+    // If there are no application frames, select the 'All Frames'
+    // tab by default.
+    if(applicationFramesCount > 0) {
+        installApplicationFramesButton();
+        applicationFramesButton.onclick();
+    } else {
+        applicationFramesButton.className = "disabled";
+        applicationFramesButton.title = "No application frames available";
+        allFramesButton.onclick();
+    }
+})();
+</script>
+</html>
+
+<!-- generated by Better Errors in <%= Time.now.to_f - @start_time %> seconds -->
