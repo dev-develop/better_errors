@@ -10,7 +10,7 @@ module BetterErrors
     end
 
     def self.template(template_name)
-      Erubis::EscapedEruby.new(File.read(template_path(template_name)))
+      Erubi::Engine.new(File.read(template_path(template_name)), escape: true)
     end
 
     attr_reader :exception, :env, :repls
@@ -20,7 +20,6 @@ module BetterErrors
       @env = env
       @start_time = Time.now.to_f
       @repls = []
-	  @frames = []
     end
 
     def id
@@ -28,7 +27,7 @@ module BetterErrors
     end
 
     def render(template_name = "main")
-      self.class.template(template_name).result binding
+      binding.eval(self.class.template(template_name).src)
     end
 
     def do_variables(opts)
@@ -42,17 +41,13 @@ module BetterErrors
       index = opts["index"].to_i
       code = opts["source"]
 
-      unless binding = backtrace_frames[index].frame_binding
+      unless (binding = backtrace_frames[index].frame_binding)
         return { error: "REPL unavailable in this stack frame" }
       end
 
-      result, prompt, prefilled_input =
-        (@repls[index] ||= REPL.provider.new(binding)).send_input(code)
+      @repls[index] ||= REPL.provider.new(binding, exception)
 
-      { result: result,
-        prompt: prompt,
-        prefilled_input: prefilled_input,
-        highlighted_input: CodeRay.scan(code, :ruby).div(wrap: nil) }
+      eval_and_respond(index, code)
     end
 
     def backtrace_frames
@@ -109,17 +104,39 @@ module BetterErrors
     end
 
     def inspect_value(obj)
-		hash = {}
-		obj.instance_variables.each {|var| hash[var.to_s.delete("@")] = obj.instance_variable_get(var) }
-		if hash.blank?
-			return obj.inspect
-		else
-			return JSON.pretty_generate(hash).gsub("\n", "<br>").gsub(" ", "&nbsp;").gsub('":&nbsp;true', '":&nbsp;<b><span style="color: #f15c21;">true</span></b>').gsub('":&nbsp;false', '":&nbsp;<b><span style="color: #f15c21;">false</span></b>').gsub('":&nbsp;null', '":&nbsp;<b><span style="color: #f15c21;">null</span></b>')
-		end
-		rescue NoMethodError
-		  "<span class='unsupported'>(object doesn't support inspect)</span>"
-		rescue Exception
-		  "<span class='unsupported'>(exception was raised in inspect)</span>"
+      inspect_raw_value(obj)
+    rescue NoMethodError
+      "<span class='unsupported'>(object doesn't support inspect)</span>"
+    rescue Exception => e
+      "<span class='unsupported'>(exception #{CGI.escapeHTML(e.class.to_s)} was raised in inspect)</span>"
+    end
+
+    def inspect_raw_value(obj)
+      value = CGI.escapeHTML(obj.inspect)
+
+      if value_small_enough_to_inspect?(value)
+        value
+      else
+        "<span class='unsupported'>(object too large. "\
+          "Modify #{CGI.escapeHTML(obj.class.to_s)}#inspect "\
+          "or increase BetterErrors.maximum_variable_inspect_size)</span>"
+      end
+    end
+
+    def value_small_enough_to_inspect?(value)
+      return true if BetterErrors.maximum_variable_inspect_size.nil?
+      value.length <= BetterErrors.maximum_variable_inspect_size
+    end
+
+    def eval_and_respond(index, code)
+      result, prompt, prefilled_input = @repls[index].send_input(code)
+
+      {
+        highlighted_input: CodeRay.scan(code, :ruby).div(wrap: nil),
+        prefilled_input:   prefilled_input,
+        prompt:            prompt,
+        result:            result
+      }
     end
   end
 end

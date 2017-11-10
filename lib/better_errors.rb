@@ -1,5 +1,5 @@
 require "pp"
-require "erubis"
+require "erubi"
 require "coderay"
 require "uri"
 
@@ -17,6 +17,8 @@ module BetterErrors
     { symbols: [:macvim, :mvim],        sniff: /vim/i,   url: proc { |file, line| "mvim://open?url=file://#{file}&line=#{line}" } },
     { symbols: [:sublime, :subl, :st],  sniff: /subl/i,  url: "subl://open?url=file://%{file}&line=%{line}" },
     { symbols: [:textmate, :txmt, :tm], sniff: /mate/i,  url: "txmt://open?url=file://%{file}&line=%{line}" },
+    { symbols: [:idea], sniff: /idea/i, url: "idea://open?file=%{file}&line=%{line}" },
+    { symbols: [:rubymine], sniff: /mine/i, url: "x-mine://open?file=%{file}&line=%{line}" },
   ]
 
   class << self
@@ -44,8 +46,14 @@ module BetterErrors
     # The ignored instance variables.
     # @return [Array]
     attr_accessor :ignored_instance_variables
+
+    # The maximum variable payload size. If variable.inspect exceeds this,
+    # the variable won't be returned.
+    # @return int
+    attr_accessor :maximum_variable_inspect_size
   end
   @ignored_instance_variables = []
+  @maximum_variable_inspect_size = 100_000
 
   # Returns a proc, which when called with a filename and line number argument,
   # returns a URL to open the filename and line in the selected editor.
