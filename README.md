@@ -1,17 +1,10 @@
-# Much Better Errors [![Gem Version](https://img.shields.io/gem/v/better_errors.svg)](https://rubygems.org/gems/better_errors) [![Build Status](https://travis-ci.org/charliesome/better_errors.svg)](https://travis-ci.org/charliesome/better_errors) [![Code Climate](https://img.shields.io/codeclimate/github/charliesome/better_errors.svg)](https://codeclimate.com/github/charliesome/better_errors)
+# Much Better Errors
+
+[![Gem Version](https://img.shields.io/gem/v/better_errors.svg)](https://rubygems.org/gems/better_errors) [![Build Status](https://travis-ci.org/charliesome/better_errors.svg)](https://travis-ci.org/charliesome/better_errors) [![Code Climate](https://img.shields.io/codeclimate/github/charliesome/better_errors.svg)](https://codeclimate.com/github/charliesome/better_errors)
 
 Better Errors replaces the standard Rails error page with a much better and more useful error page. It is also usable outside of Rails in any Rack app as Rack middleware.
 
-![image](http://i.imgur.com/NtsOyDM.png)
-
-### Request and service/instance bags:
-![image](http://i.imgur.com/EioLTJp.png)
-
-### and other traces follows like this:
-![image](http://i.imgur.com/y4prOXy.png)
-
-### and shell is here (updated):
-![image](http://i.imgur.com/nOKfYoL.png)
+![Sample](screenshot.png)
 
 
 ## Features
@@ -22,11 +15,12 @@ Better Errors replaces the standard Rails error page with a much better and more
 * Live REPL on every stack frame
 
 ## Improvements
-* Added Symfony a-like exception page.
-* Added ability to load all traces at once without second or more XHR request for each exception. (This adds some overload but its in development.)
-* Improved UI regarding to first. :)
-<del>* Removed console -for now-</del>
-* Added shell feature back
+I reverted all changes and used modified version of official template.
+
+* JSON parser used so it will be much more visible and pretty.
+* CSS tweaks so it wont hurt your eyes and your remote desktop connection preferences.
+
+**As styling**, I used much more monochrome and pastel colors instead of red-ish or black-ish variants. Added paddings, removed shadows and used borders. More beautified version of Better Errors. I will try to keep this repo in sync with official repository, as much as I can.
 
 ## Installation
 
